@@ -1,12 +1,12 @@
+
 ---
-title: "Peer Assessment 1"
-output: html_document
+Peer Assessment 1
 ---
 
 Loading and preprocessing the data
 -------------------------------------
 ```{r}
-##Loading and preprocessing the data
+#Loading and preprocessing the data
 
 activityData<- read.csv("activity.csv")
 ```
@@ -72,5 +72,3 @@ library(lattice)
 xyplot(stepsByDay$steps ~ stepsByDay$interval |stepsByDay$DOW, meain="Average Steps per Day/Interval", xlab="Interval", ylab="Steps",layout=c(1,2),type="l")
 
 ```
-
-##Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
