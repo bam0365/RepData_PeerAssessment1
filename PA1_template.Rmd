@@ -25,10 +25,33 @@ print(dailyMedian)
 
 ## What is the average daily activity pattern?
 
-
+stepsInterval <- aggregate(steps ~ interval, activityData,mean)
+png("plot2.png")
+plot(stepsInterval$interval, stepsInterval$steps,type="l", xlab="Interval",ylab="Steps")
+dev.off()
+maxInterval<- stepsInterval[which.max(stepsInterval$steps),1]
+print("daily activity pattern")
+print(maxInterval)
 
 ## Imputing missing values
-
-
+incompleteData<- sum(!complete.cases(activityData))
+imputedData <- transform(activityData, steps=ifelse(is.na(activityData$steps),stepsInterval$steps[match(activityData$interval,stepsInterval$interval)],activityData$steps))
+imputedData[as.character(imputedData$date)=="2012-10-01",1] <-0
+stepsByDay <- aggregate(steps ~ date, imputedData, sum)
+hist(stepsByDay$steps, main=paste("Total Steps Each Day"), col="orange",xlab="Number of Steps")
+legend("topright", c("Imputed", "Non-imputed"), col=c("blue", "red"), lwd=10)
+rmeanImputed <- mean(stepsByDay$steps)
+rmedianImputed <- median(stepsByDay$steps)
+print("Imputing missing values mean and median")
+print(rmeanImputed)
+print(rmedianImputed)
+meanDelta <- rmeanImputed-dailyMean
+medianDelta <-rmedianImputed-dailyMedian
+totalDiff <- sum(stepsByDay$steps)-sum(dailySteps$steps)
 
 ## Are there differences in activity patterns between weekdays and weekends?
+weekdays <- c("Monday","Tuesday","Wednesday","Thursday","Friday")
+imputedData$DOW = as.factor(ifelse(is.element(weekdays(as.Date(imputedData$date)),weekdays),"Weekday","Weekend"))
+stepsByDay <-aggregate(steps ~ interval +DOW, imputedData,mean)
+library(lattice)
+xyplot(stepsByDay$steps ~ stepsByDay$interval |stepsByDay$DOW, meain="Average Steps per Day/Interval", xlab="Interval", ylab="Steps",layout=c(1,2),type="l")
