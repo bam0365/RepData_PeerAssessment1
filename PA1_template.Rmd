@@ -1,42 +1,55 @@
 ---
-title: "Reproducible Research: Peer Assessment 1"
-output: 
-  html_document:
-    keep_md: true
+title: "Peer Assessment 1"
+output: html_document
 ---
 
+Loading and preprocessing the data
+-------------------------------------
+```{r}
+##Loading and preprocessing the data
 
-## Loading and preprocessing the data
 activityData<- read.csv("activity.csv")
+```
 
-## What is mean total number of steps taken per day?
+What is mean total number of steps taken per day?
+-------------------------------------
+```{r}
+##What is mean total number of steps taken per day?
 dailySteps <- aggregate(steps ~ date, activityData,sum)
-png("plot1.png")
+##png("plot1.png")
 hist(dailySteps$steps, main=paste("Daily Total"), col="green", xlab="No of Steps")
-dev.off()
+##dev.off()
 dailyMean <- mean(dailySteps$steps)
 dailyMedian <- median(dailySteps$steps)
 print("Daily Mean and Median")
 print(dailyMean)
 print(dailyMedian)
+```
 
-## What is the average daily activity pattern?
-
+What is the average daily activity pattern?
+-------------------------------------
+```{r}
+##What is the average daily activity pattern?
 stepsInterval <- aggregate(steps ~ interval, activityData,mean)
-png("plot2.png")
+##png("plot2.png")
 plot(stepsInterval$interval, stepsInterval$steps,type="l", xlab="Interval",ylab="Steps")
-dev.off()
+##dev.off()
 maxInterval<- stepsInterval[which.max(stepsInterval$steps),1]
 print("daily activity pattern")
 print(maxInterval)
+```
 
-## Imputing missing values
+Imputing missing values
+-------------------------------------
+```{r}
+##Imputing missing values
 incompleteData<- sum(!complete.cases(activityData))
 imputedData <- transform(activityData, steps=ifelse(is.na(activityData$steps),stepsInterval$steps[match(activityData$interval,stepsInterval$interval)],activityData$steps))
 imputedData[as.character(imputedData$date)=="2012-10-01",1] <-0
 stepsByDay <- aggregate(steps ~ date, imputedData, sum)
 hist(stepsByDay$steps, main=paste("Total Steps Each Day"), col="orange",xlab="Number of Steps")
 legend("topright", c("Imputed", "Non-imputed"), col=c("blue", "red"), lwd=10)
+
 rmeanImputed <- mean(stepsByDay$steps)
 rmedianImputed <- median(stepsByDay$steps)
 print("Imputing missing values mean and median")
@@ -45,10 +58,19 @@ print(rmedianImputed)
 meanDelta <- rmeanImputed-dailyMean
 medianDelta <-rmedianImputed-dailyMedian
 totalDiff <- sum(stepsByDay$steps)-sum(dailySteps$steps)
+```
 
-## Are there differences in activity patterns between weekdays and weekends?
+Are there differences in activity patterns between weekdays and weekends?
+-------------------------------------
+```{r}
+
+##Are there differences in activity patterns between weekdays and weekends?
 weekdays <- c("Monday","Tuesday","Wednesday","Thursday","Friday")
 imputedData$DOW = as.factor(ifelse(is.element(weekdays(as.Date(imputedData$date)),weekdays),"Weekday","Weekend"))
 stepsByDay <-aggregate(steps ~ interval +DOW, imputedData,mean)
 library(lattice)
 xyplot(stepsByDay$steps ~ stepsByDay$interval |stepsByDay$DOW, meain="Average Steps per Day/Interval", xlab="Interval", ylab="Steps",layout=c(1,2),type="l")
+
+```
+
+##Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
