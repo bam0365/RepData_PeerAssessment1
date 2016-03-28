@@ -20,7 +20,6 @@ print("Daily Mean and Median")
 print(dailyMean)
 print(dailyMedian)
 
-
 ## What is the average daily activity pattern?
 
 stepsInterval <- aggregate(steps ~ interval, activityData,mean)
