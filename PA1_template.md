@@ -2,13 +2,13 @@
 Reproducible Research: Peer Assessment 1
 <h1>Loading and preprocessing the data</h1>
 
-<h4>1. Load the data (i.e. read.csv())</code></hr>
+<h4>1. Load the data (i.e. read.csv())</code></h4>
 
 <code>
 activityDataRaw <- read.csv("activity.csv",stringsAsFactors=FALSE)
 </code>
 
-<h4>2. Process/transform the data (if necessary) into a format suitable for your analysis.</code></hr>
+<h4>2. Process/transform the data (if necessary) into a format suitable for your analysis.</code></h4>
 <code>
 # Data formatting
 <br>activityDataRaw$date <- as.POSIXct(activityDataRaw$date, format="%Y-%m-%d")
@@ -42,7 +42,7 @@ activityDataRaw <- read.csv("activity.csv",stringsAsFactors=FALSE)
 <code>
 <br>sumData <- aggregate(steps ~ date, activityData, sum)<br>
 <br>names(sumData) <- c("data","steps")
-<img src="https://github.com/bam0365/RepData_PeerAssessment1/blob/master/plot1.png" alt="Plot1" />
+<img src="https://github.com/bam0365/RepData_PeerAssessment1/blob/master/plot1.png" alt="lot1" />
 <br><br>
 <code>
 
@@ -72,7 +72,7 @@ plot(meanData$interval
      ,ylab="Avg steps"
      ,main="Time series of avg steps per interval (excluding NA)")
 <br>
-<img src="https://github.com/bam0365/RepData_PeerAssessment1/blob/master/plot2.png" alt="Plot2" />
+<img src="https://github.com/bam0365/RepData_PeerAssessment1/blob/master/plot2.png" alt="plot2" />
 <br>
 
 <h4> 2. Which 5-minute interval, on average across all the days in the dataset, contains the maximum number of steps?</h4>
@@ -100,7 +100,7 @@ naPos <- which(is.na(activityData$steps))
 <br>names(sumData) <-c("Date","steps")
 <br>ggplot(sumData,aes(x=steps)) + geom_histogram(fill="green", binwidth=1000)+ labs(title="Histogram of Step taken daily", x="Number of steps daily", y= "Count number of times daily")+ theme_bw()
 
-<img src="https://github.com/bam0365/RepData_PeerAssessment1/blob/master/plot3.png" alt="Plot3" />
+<img src="https://github.com/bam0365/RepData_PeerAssessment1/blob/master/plot3.png" alt="plot3" />
 <br>mean(sumData$Steps)
 <br>median(sumData$Steps)
 
@@ -111,7 +111,7 @@ naPos <- which(is.na(activityData$steps))
                      ,by=list(activityData$daytype,activityData$weekday,activityData$interval),FUN=mean)
 <br>names(meanData) <- c("DayType","Weekday", "Interval", "Mean")
 <h4>2. Make a panel plot containing a time series plot (i.e. type = “l”) of the 5-minute interval (x-axis) and the average number of steps taken, averaged across all weekday days or weekend days (y-axis). The plot should look something like the following, which was created using simulated data:</h4>
-<br>yplot(Mean ~ Interval | DayType , meanData
+<br>xyplot(Mean ~ Interval | DayType , meanData
        ,type="l"
        ,lwd="1"
        ,xlab="Interval"
@@ -119,5 +119,5 @@ naPos <- which(is.na(activityData$steps))
        ,layout=c(1,2))
 <br>
 
-<img src="https://github.com/bam0365/RepData_PeerAssessment1/blob/master/plot3.png" alt="Plot4" />
+<img src="https://github.com/bam0365/RepData_PeerAssessment1/blob/master/plot3.png" alt="plot4" />
 
