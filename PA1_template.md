@@ -42,7 +42,7 @@ activityDataRaw <- read.csv("activity.csv",stringsAsFactors=FALSE)
 <code>
 <br>sumData <- aggregate(steps ~ date, activityData, sum)<br>
 <br>names(sumData) <- c("data","steps")
-<img src="https://github.com/bam0365/RepData_PeerAssessment1/blob/master/plot1.png" alt="lot1" />
+<img src="https://github.com/bam0365/RepData_PeerAssessment1/blob/master/plot1.png" alt="plot1" />
 <br><br>
 <code>
 
@@ -119,5 +119,5 @@ naPos <- which(is.na(activityData$steps))
        ,layout=c(1,2))
 <br>
 
-<img src="https://github.com/bam0365/RepData_PeerAssessment1/blob/master/plot3.png" alt="plot4" />
+<img src="https://github.com/bam0365/RepData_PeerAssessment1/blob/master/plot4.png" alt="plot4" />
 

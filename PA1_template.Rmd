@@ -1,5 +1,5 @@
 ---
-Peer Assessment
+output: html_document
 ---
 #Reproducible Research: Peer Assessment 1
 ######by: Ben M (4/8/2016)
@@ -76,6 +76,7 @@ names(sumData) <- c("data","steps")
 head(sumData)
 # Plot the histogram using ggplot
 library(ggplot2)
+#png("plot1.png")
 ggplot(sumData,aes(x=steps)) + geom_histogram(fill="green", binwidth=1000)+ labs(title="Histogram of Step taken daily", x="Number of steps daily", y= "Count number of times daily")+ theme_bw()
 
 ```
@@ -103,7 +104,7 @@ meanData <- aggregate(activityData$steps
 names(meanData) <- c("interval","mean")
 head(meanData)
 
-
+#png("plot2.png")
 plot(meanData$interval
      ,meanData$mean
      ,type="l"
@@ -158,17 +159,13 @@ summary(is.na(activityData$steps))
 ```{r, echo=TRUE}
 
 sumData <- aggregate(activityData$steps, by=list(activityData$date),FUN=sum)
-names(sumData) <-c("Date","Total")
-hist(sumData$Total
-     ,breaks=seq(from=0,to=25000,by=2500)
-     ,col="orange"
-     ,xlab="Total steps"
-     ,ylab=c(0,30)
-     ,main="Histogram of toal steps taken each day (NA replaced by mean value)")
+names(sumData) <-c("Date","steps")
+#png("plot3.png")
+ggplot(sumData,aes(x=steps)) + geom_histogram(fill="green", binwidth=1000)+ labs(title="Histogram of Step taken daily", x="Number of steps daily", y= "Count number of times daily")+ theme_bw()
 
 
-meanData<-mean(sumData$Total)
-medianData<-median(sumData$Total)
+meanData<-mean(sumData$steps)
+medianData<-median(sumData$steps)
 meanData
 medianData
 ```
@@ -187,6 +184,7 @@ head(meanData)
   2. Make a panel plot containing a time series plot (i.e. type = "l") of the 5-minute interval (x-axis) and the average number of steps taken, averaged across all weekday days or weekend days (y-axis). The plot should look something like the following, which was created using simulated data:
 
 ```{r, echo=TRUE}
+#png("plot4.png")
 xyplot(Mean ~ Interval | DayType , meanData
        ,type="l"
        ,lwd="1"
